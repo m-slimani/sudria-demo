@@ -13,26 +13,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1")
-public class Controller {
+@RequestMapping("/api/v3")
+public class ReturnCodesController {
 
   @RequestMapping(value = "/animals", method = RequestMethod.GET)
   public ResponseEntity<List<String>> getAnimals() {
-    List<String> animals = Arrays.asList("cat", "dog", "turtle");
-    return new ResponseEntity<>(animals, HttpStatus.OK);
+    List<String> animals = Arrays.asList("V3cat", "V3dog", "V3turtle");
+    return new ResponseEntity<>(animals, HttpStatus.BAD_REQUEST);
   }
 
-
-  public void createAnimals() {
-
+  @RequestMapping(value = "/animals", method = RequestMethod.POST)
+  public ResponseEntity<String> cearteAnimals(
+      @RequestBody String animalName) {
+    log.info("animal is created :" + animalName);
+    return new ResponseEntity<>(animalName, HttpStatus.BAD_REQUEST);
   }
+
 
   @RequestMapping(value = "/animals/{id}", method = RequestMethod.PUT)
   public ResponseEntity<String> replaceAnimals(
       @PathVariable(value = "id") Long id,
       @RequestBody String animalName) {
     log.info("animal with id :" + id + " is now :" + animalName);
-    return new ResponseEntity<>(animalName, HttpStatus.OK);
+    return new ResponseEntity<>(animalName, HttpStatus.BAD_REQUEST);
   }
 
   @RequestMapping(value = "/animals/{id}", method = RequestMethod.DELETE)
