@@ -1,5 +1,6 @@
 package com.sudria.demo.application.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -11,9 +12,22 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableCaching
 public class CachingConfig {
 
+  @Autowired
+  CacheManager cacheManager;
+
   @Bean
-  @Scheduled(fixedRate = 6000)
   public CacheManager cacheManager() {
     return new ConcurrentMapCacheManager("animals");
   }
+
+  public void evictAllCaches() {
+    cacheManager.getCacheNames().stream()
+        .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+  }
+
+  @Scheduled(fixedRate = 5000)
+  public void evictAllcachesAtIntervals() {
+    evictAllCaches();
+  }
+
 }

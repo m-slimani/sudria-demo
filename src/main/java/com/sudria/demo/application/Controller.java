@@ -7,6 +7,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.sudria.demo.domain.Animal;
 import com.sudria.demo.domain.AnimalService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -26,6 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
+@Api("Apis de gestin de zoo")
 public class Controller {
 
   private AnimalService animalService;
@@ -52,6 +54,7 @@ public class Controller {
   @RequestMapping(value = "/animals/{id}", method = RequestMethod.GET)
   public ResponseEntity<Animal> getAnimalsById( @PathVariable(value = "id") Long id) {
     try {
+      log.info("********************** inside the controller ****************************");
       return new ResponseEntity<>(animalService.getAnimals(id), HttpStatus.OK);
     } catch (NotFoundException e) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Not Found", e);
