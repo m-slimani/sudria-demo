@@ -49,7 +49,7 @@ public class Controller {
   @RequestMapping(value = "/animals", method = RequestMethod.POST)
   public ResponseEntity<Animal> createAnimals(
       @RequestBody Animal animal) {
-    animalService.addAnimal(animal);
+    animal = animalService.addAnimal(animal);
     return new ResponseEntity<>(animal, HttpStatus.CREATED);
   }
 

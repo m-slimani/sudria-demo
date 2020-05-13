@@ -10,36 +10,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnimalDao {
 
-  private ZooRepository zooRepository;
+  private AnimalRepository animalRepository;
 
-  public AnimalDao(ZooRepository zooRepository) {
-    this.zooRepository = zooRepository;
+  public AnimalDao(AnimalRepository zooRepository) {
+    this.animalRepository = zooRepository;
   }
 
   public List<Animal> findAnimals() {
-    return StreamSupport.stream(zooRepository.findAll().spliterator(), false)
-        .map(animalEntitie -> buildAnimal(animalEntitie))
+    return StreamSupport.stream(animalRepository.findAll().spliterator(), false)
+        .map(animalEntity -> buildAnimal(animalEntity))
         .collect(Collectors.toList());
   }
 
   public Animal findAnimals(Long id) throws NotFoundException {
-    return buildAnimal(zooRepository.findById(id).orElseThrow(NotFoundException::new));
+    return buildAnimal(animalRepository.findById(id).orElseThrow(NotFoundException::new));
   }
 
   public Animal createAnimals(Animal animal) {
-    return buildAnimal(zooRepository.save(buildEntity(animal)));
+    return buildAnimal(animalRepository.save(buildEntity(animal)));
   }
 
   public void deleteAnimals(Long id) {
-    zooRepository.delete(zooRepository.findById(id).get());
+    animalRepository.delete(animalRepository.findById(id).get());
   }
 
   public void updateAnimal(Animal animal) {
-    zooRepository.save(buildEntity(animal));
+    animalRepository.save(buildEntity(animal));
   }
 
   public Animal replaceAnimal(Animal animal) {
-    return buildAnimal(zooRepository.save(buildEntity(animal)));
+    return buildAnimal(animalRepository.save(buildEntity(animal)));
   }
 
   private AnimalEntity buildEntity(Animal animal) {

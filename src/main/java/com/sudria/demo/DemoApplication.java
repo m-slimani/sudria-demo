@@ -1,7 +1,7 @@
 package com.sudria.demo;
 
 import com.sudria.demo.infrastructure.AnimalEntity;
-import com.sudria.demo.infrastructure.ZooRepository;
+import com.sudria.demo.infrastructure.AnimalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,10 +13,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication implements CommandLineRunner {
 
   @Autowired
-  private ZooRepository zooRepository;
+  private AnimalRepository animalRepository;
 
-  public DemoApplication(ZooRepository zooRepository) {
-    this.zooRepository = zooRepository;
+  public DemoApplication(AnimalRepository animalRepository) {
+    this.animalRepository = animalRepository;
   }
 
   public static void main(String[] args) {
@@ -34,7 +34,7 @@ public class DemoApplication implements CommandLineRunner {
   }
 
   private void saveAnimal(long id, String name, int age, String category) {
-    this.zooRepository.save(
+    this.animalRepository.save(
         AnimalEntity
             .builder()
             .id(id)
