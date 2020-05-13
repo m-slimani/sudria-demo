@@ -60,9 +60,9 @@ public class Controller {
 
   @RequestMapping(value = "/animals", method = RequestMethod.POST)
   public ResponseEntity<Animal> createAnimals(
-      @ApiParam(value = "Animal object store in database table", required = true)
-      @RequestBody Animal animal) {
-    animalService.addAnimal(animal);
+      @ApiParam(value = "Animal object stored in database table", required = true)
+      @RequestBody Animal animal) throws NotFoundException {
+    animal = animalService.addAnimal(animal);
     return new ResponseEntity<>(animal, HttpStatus.CREATED);
   }
 
@@ -71,7 +71,7 @@ public class Controller {
       @PathVariable(value = "id") Long id,
       @RequestBody Animal animal) {
     animal.setId(id);
-    animalService.replaceAnimal(animal);
+    animal = animalService.replaceAnimal(animal);
     return new ResponseEntity<>(animal, HttpStatus.OK);
   }
 

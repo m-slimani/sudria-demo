@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name ="FOOD_ENTITY")
 public class FoodEntity {
 
   @Id
@@ -26,7 +28,6 @@ public class FoodEntity {
   private int quantity;
   @Column(name = "CATEGORY", length = 50, nullable = false)
   private String category;
-
 
   @ManyToOne
   private AnimalEntity animalEntity;

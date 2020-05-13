@@ -24,7 +24,7 @@ public class AnimalService {
     return animalDao.findAnimals(id);
   }
 
-  public Animal addAnimal(Animal animal) {
+  public Animal addAnimal(Animal animal) throws NotFoundException {
     return animalDao.createAnimals(animal);
   }
 
