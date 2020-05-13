@@ -17,9 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 
-  //  @Autowired
   private ZooRepository zooRepository;
-  //  @Autowired
   private FoodRepository foodRepository;
 
   public DemoApplication(ZooRepository zooRepository, FoodRepository foodRepository) {
@@ -43,7 +41,6 @@ public class DemoApplication implements CommandLineRunner {
 
   @Transactional
   private void saveAnimal(long id, String name, int age, String category, List<Food> foods) {
-
 
     AnimalEntity animalEntity = this.zooRepository.save(
         AnimalEntity
