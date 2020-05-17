@@ -91,6 +91,23 @@
       <version>2.8.0</version>
     </dependency>
 
+      <dependency>
+        <groupId>io.leangen.graphql</groupId>
+        <artifactId>graphql-spqr-spring-boot-starter</artifactId>
+        <version>0.0.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.graphql-java/graphiql-spring-boot-starter -->
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphiql-spring-boot-starter</artifactId>
+      <version>3.10.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>

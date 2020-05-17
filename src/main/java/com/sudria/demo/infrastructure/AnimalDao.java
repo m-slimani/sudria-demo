@@ -92,6 +92,8 @@ public class AnimalDao {
                 .stream()
                 .map(foodEntity -> Food.builder()
                     .id(foodEntity.getId())
+                    .frequency(foodEntity.getFrequency())
+                    .category(foodEntity.getCategory())
                     .build())
                 .collect(Collectors.toList())
         )
