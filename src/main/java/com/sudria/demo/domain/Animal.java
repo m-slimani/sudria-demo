@@ -22,7 +22,7 @@ public class Animal {
   private String name;
   private int age;
   private String category;
-  private List<Food> foods;
+  private List<Long> foods;
 
   @Getter
   @ToString

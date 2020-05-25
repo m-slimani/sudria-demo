@@ -15,8 +15,6 @@ public class AnimalResolver {
     this.animalService = animalService;
   }
 
-
-//  @GraphQLQuery(name = "animals")
   @GraphQLQuery
   public List<Animal> getAnimals (){
     return animalService.getAnimals();
