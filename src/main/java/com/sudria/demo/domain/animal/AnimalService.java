@@ -1,4 +1,4 @@
-package com.sudria.demo.domain;
+package com.sudria.demo.domain.animal;
 
 import com.sudria.demo.infrastructure.AnimalDao;
 import java.util.List;

@@ -1,10 +1,11 @@
 package com.sudria.demo;
 
-import com.sudria.demo.domain.Animal.Food;
+
+import com.sudria.demo.domain.food.Food;
 import com.sudria.demo.infrastructure.AnimalEntity;
+import com.sudria.demo.infrastructure.AnimalRepository;
 import com.sudria.demo.infrastructure.FoodEntity;
 import com.sudria.demo.infrastructure.FoodRepository;
-import com.sudria.demo.infrastructure.ZooRepository;
 import java.util.Arrays;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -19,11 +20,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class DemoApplication implements CommandLineRunner {
 
-  private ZooRepository zooRepository;
+  private AnimalRepository animalRepository;
   private FoodRepository foodRepository;
 
-  public DemoApplication(ZooRepository zooRepository, FoodRepository foodRepository) {
-    this.zooRepository = zooRepository;
+  public DemoApplication(AnimalRepository animalRepository, FoodRepository foodRepository) {
+    this.animalRepository = animalRepository;
     this.foodRepository = foodRepository;
   }
 
@@ -44,7 +45,7 @@ public class DemoApplication implements CommandLineRunner {
   @Transactional
   private void saveAnimal(long id, String name, int age, String category, List<Food> foods) {
 
-    AnimalEntity animalEntity = this.zooRepository.save(
+    AnimalEntity animalEntity = this.animalRepository.save(
         AnimalEntity
             .builder()
             .id(id)

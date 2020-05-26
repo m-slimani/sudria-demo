@@ -1,10 +1,8 @@
 package com.sudria.demo.application;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +21,7 @@ public class ControllerTest {
 
 
   @Autowired
-  private Controller controller;
+  private AnimalController controller;
 
   @Test
   public void contexLoads() {

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
-import com.sudria.demo.domain.Animal;
-import com.sudria.demo.domain.AnimalService;
+import com.sudria.demo.domain.animal.Animal;
+import com.sudria.demo.domain.animal.AnimalService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -29,12 +29,12 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/v1")
 @Api("Apis de gestin de zoo")
-public class Controller {
+public class AnimalController {
 
   private AnimalService animalService;
   private ObjectMapper objectMapper;
 
-  public Controller(AnimalService animalService, ObjectMapper objectMapper) {
+  public AnimalController(AnimalService animalService, ObjectMapper objectMapper) {
     this.animalService = animalService;
     this.objectMapper = objectMapper;
   }

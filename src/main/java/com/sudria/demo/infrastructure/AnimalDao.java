@@ -1,7 +1,6 @@
 package com.sudria.demo.infrastructure;
 
-import com.sudria.demo.domain.Animal;
-import com.sudria.demo.domain.Animal.Food;
+import com.sudria.demo.domain.animal.Animal;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -11,65 +10,46 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnimalDao {
 
-  private ZooRepository zooRepository;
+  private AnimalRepository animalRepository;
   private FoodRepository foodRepository;
 
-  public AnimalDao(ZooRepository zooRepository, FoodRepository foodRepository) {
-    this.zooRepository = zooRepository;
+  public AnimalDao(AnimalRepository animalRepository, FoodRepository foodRepository) {
+    this.animalRepository = animalRepository;
     this.foodRepository = foodRepository;
   }
 
   public List<Animal> findAnimals() {
-    return StreamSupport.stream(zooRepository.findAll().spliterator(), false)
+    return StreamSupport.stream(animalRepository.findAll().spliterator(), false)
         .map(animalEntitie -> buildAnimal(animalEntitie, foodRepository.findByAnimalEntity(animalEntitie)))
         .collect(Collectors.toList());
   }
 
   public Animal findAnimals(Long id) throws NotFoundException {
-    AnimalEntity animalEntity = zooRepository.findById(id).orElseThrow(NotFoundException::new);
+    AnimalEntity animalEntity = animalRepository.findById(id).orElseThrow(NotFoundException::new);
     return buildAnimal(animalEntity, foodRepository.findByAnimalEntity(animalEntity));
   }
 
   public Animal createAnimals(Animal animal) throws NotFoundException {
-    AnimalEntity animalEntity = zooRepository.save(buildAnimalEntity(animal));
-
-    animal.getFoods()
-        .stream()
-        .forEach(food ->
-            foodRepository.save(buildFoodEntity(animalEntity, food)));
-
+    AnimalEntity animalEntity = animalRepository.save(buildAnimalEntity(animal));
     return buildAnimal(
-        zooRepository.findById(animalEntity.getId()).orElseThrow(NotFoundException::new),
+        animalRepository.findById(animalEntity.getId()).orElseThrow(NotFoundException::new),
         foodRepository.findByAnimalEntity(animalEntity));
   }
 
 
   public void deleteAnimals(Long id) {
-    zooRepository.delete(zooRepository.findById(id).get());
+    animalRepository.delete(animalRepository.findById(id).get());
   }
 
-  public void updateAnimal(Animal animal) {
-
-    AnimalEntity animalEntity = zooRepository.save(buildAnimalEntity(animal));
-
-    animal.getFoods()
-        .stream()
-        .forEach(food ->
-            foodRepository.save(buildFoodEntity(animalEntity, food)));
+  public Animal updateAnimal(Animal animal) {
+    return buildAnimal(animalRepository.save(buildAnimalEntity(animal)),
+        foodRepository.findByAnimalEntityId(animal.getId()));
   }
 
-  private FoodEntity buildFoodEntity(AnimalEntity animalEntity, Food food) {
-    return FoodEntity.builder()
-        .category(food.getCategory())
-        .frequency(food.getFrequency())
-        .quantity(food.getQuantity())
-        .animalEntity(animalEntity)
-        .build();
-  }
 
   public Animal replaceAnimal(Animal animal) {
-    AnimalEntity animalEntity = zooRepository.save(buildAnimalEntity(animal));
-    return buildAnimal(animalEntity,  foodRepository.findByAnimalEntity(animalEntity));
+    AnimalEntity animalEntity = animalRepository.save(buildAnimalEntity(animal));
+    return buildAnimal(animalEntity, foodRepository.findByAnimalEntity(animalEntity));
   }
 
   private AnimalEntity buildAnimalEntity(Animal animal) {
@@ -87,18 +67,10 @@ public class AnimalDao {
         .name(animalEntity.getName())
         .age(animalEntity.getAge())
         .category(animalEntity.getCategory())
-        .foods(
-            foodEntities
-                .stream()
-                .map(foodEntity -> Food.builder()
-                    .id(foodEntity.getId())
-                    .frequency(foodEntity.getFrequency())
-                    .category(foodEntity.getCategory())
-                    .build())
-                .collect(Collectors.toList())
-        )
+        .foods(foodEntities
+            .stream()
+            .map(foodEntity -> foodEntity.getId())
+            .collect(Collectors.toList()))
         .build();
   }
-
-
 }
