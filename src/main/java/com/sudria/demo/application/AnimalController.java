@@ -64,6 +64,7 @@ public class AnimalController {
   }
 
   @RequestMapping(value = "/animals", method = RequestMethod.POST)
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<Animal> createAnimals(
       @ApiParam(value = "Animal object stored in database table", required = true)
       @RequestBody Animal animal) throws NotFoundException {
@@ -81,6 +82,7 @@ public class AnimalController {
   }
 
   @RequestMapping(value = "/animals/{id}", method = RequestMethod.DELETE)
+  @CrossOrigin(origins = "http://localhost:4200")
   public ResponseEntity<Animal> deleteAnimals(@PathVariable(value = "id") Long id) {
     animalService.deleteAnimals(id);
     return new ResponseEntity<>(HttpStatus.OK);
